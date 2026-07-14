@@ -45,6 +45,7 @@ const state = {
 };
 
 const MAX_ROUND = 10; // 이 라운드를 클리어하면 다음 라운드 대신 엔딩 영상이 나온다
+const MAX_LIVES = 5;  // 보너스 목숨 아이템을 먹어도 이 이상은 늘어나지 않는다
 
 // ---- 3) 패들(막대) ----
 // 파워업으로 speed/width가 바뀌기 때문에, 되돌아갈 "기본값"과 상/하한선을 상수로 정해둔다.
@@ -129,6 +130,7 @@ const POWERUP_STYLE = {
   ballSpeedUp:     { color: "#20c997", label: "B+" },  // 공 속도 증가
   ballSpeedDown:   { color: "#868e96", label: "B-" },  // 공 속도 감소
   missile:         { color: "#ff922b", label: "🚀" }, // 미사일 충전 (↑ 로 발사, 벽돌 즉시 파괴)
+  extraLife:       { color: "#ff4d6d", label: "❤" },   // 보너스 목숨 (최대 MAX_LIVES개까지)
 };
 const POWERUP_TYPES = Object.keys(POWERUP_STYLE);
 
@@ -172,6 +174,10 @@ function applyPowerUp(type) {
       break;
     case "missile":
       paddle.missiles = Math.min(paddle.missiles + 3, MAX_MISSILES);
+      updateHud();
+      break;
+    case "extraLife":
+      state.lives = Math.min(state.lives + 1, MAX_LIVES);
       updateHud();
       break;
   }
