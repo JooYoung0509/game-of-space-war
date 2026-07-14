@@ -78,7 +78,7 @@ h1 {
   background: #444a63;
 }
 
-/* 캔버스 + 오버레이 + 엔딩화면 + 미사일 버튼을 한 덩어리로 묶어서 화면 크기에
+/* 캔버스 + 오버레이 + 엔딩화면을 한 덩어리로 묶어서 화면 크기에
    맞춰 다 같이 줄어들게 한다. 캔버스의 실제 그리기 해상도(840x640, HTML 속성)는
    그대로 두고, CSS로 "보이는 크기"만 반응형으로 줄인다. */
 .canvas-wrap {
@@ -172,33 +172,6 @@ canvas {
   color: #f0f0f5;
 }
 
-/* ===== 미사일 발사 버튼 (모바일에는 ↑ 방향키가 없어서 필요) ===== */
-.fire-btn {
-  position: absolute;
-  right: 4%;
-  bottom: 5%;
-  z-index: 2; /* 오버레이/엔딩 화면이 떠 있을 때는 그 아래로 가려진다 */
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 146, 43, 0.85);
-  color: #10131f;
-  font-size: 24px;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.fire-btn:active {
-  transform: scale(0.92);
-}
-
 .instructions {
   margin-top: 10px;
   font-size: 13px;
@@ -237,10 +210,5 @@ canvas {
   }
   .legend .tag {
     margin: 0 2px 0 6px;
-  }
-  .fire-btn {
-    width: 48px;
-    height: 48px;
-    font-size: 20px;
   }
 }

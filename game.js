@@ -23,9 +23,6 @@ const actionBtn = document.getElementById("actionBtn");
 const endingWrapEl = document.getElementById("endingWrap");
 const endingVideoEl = document.getElementById("endingVideo");
 
-// 모바일용 미사일 발사 버튼 (↑ 방향키가 없는 터치 기기를 위한 것)
-const fireBtnEl = document.getElementById("fireBtn");
-
 // 배경음악 <audio> 요소와 음소거 버튼
 const bgMusic = document.getElementById("bgMusic");
 const muteBtn = document.getElementById("muteBtn");
@@ -251,13 +248,21 @@ function updatePowerUps() {
   });
 }
 
+// 스페이스바/클릭/탭 하나로 "공 발사"와 "미사일 발사"를 겸하게 한다.
+// fireMissile()은 게임이 진행 중이 아니거나(시작 화면 등) 미사일이 없으면
+// 아무 일도 하지 않으므로, 상황에 안 맞게 눌러도 안전하다.
+function launchOrFire() {
+  launchBallOrStart();
+  fireMissile();
+}
+
 // ---- 7) 키보드 / 마우스 입력 처리 ----
 document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft") paddle.moveLeft = true;
   if (e.key === "ArrowRight") paddle.moveRight = true;
   if (e.key === " ") {
     e.preventDefault();
-    launchBallOrStart();
+    launchOrFire();
   }
   if (e.key === "ArrowUp") {
     e.preventDefault();
@@ -288,18 +293,19 @@ canvas.addEventListener("mousemove", (e) => {
   movePaddleCenterTo(e.clientX);
 });
 
-canvas.addEventListener("click", () => launchBallOrStart());
+canvas.addEventListener("click", () => launchOrFire());
 actionBtn.addEventListener("click", () => launchBallOrStart());
 
 // ---- 모바일 터치 조작 ----
 // 캔버스를 손가락으로 드래그하면 패들이 따라가고(마우스 이동과 동일한 로직),
-// 화면을 처음 터치하는 순간에 게임 시작/공 발사를 같이 처리한다.
+// 화면을 터치하는 순간에 공 발사/미사일 발사를 같이 처리한다(별도 버튼 없이
+// 화면 탭만으로 미사일도 나가도록).
 canvas.addEventListener(
   "touchstart",
   (e) => {
     e.preventDefault(); // 화면 스크롤/확대 제스처로 번지지 않도록 막는다
     movePaddleCenterTo(e.touches[0].clientX);
-    launchBallOrStart();
+    launchOrFire();
   },
   { passive: false }
 );
@@ -319,18 +325,6 @@ endingWrapEl.addEventListener(
   (e) => {
     e.preventDefault();
     launchBallOrStart();
-  },
-  { passive: false }
-);
-
-// 모바일에는 ↑ 방향키가 없으므로, 화면의 🚀 버튼으로 미사일을 발사한다.
-fireBtnEl.addEventListener("click", () => fireMissile());
-fireBtnEl.addEventListener(
-  "touchstart",
-  (e) => {
-    e.preventDefault(); // 버튼 아래 캔버스로 터치가 전달되어 패들이 튀지 않도록 막는다
-    e.stopPropagation();
-    fireMissile();
   },
   { passive: false }
 );
