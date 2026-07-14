@@ -1,0 +1,172 @@
+/* ===== 전체 화면 배경과 중앙 정렬 ===== */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 어두운 반투명 레이어를 이미지 위에 겹쳐서 글씨 대비를 확보한다 */
+  background:
+    linear-gradient(rgba(8, 9, 16, 0.55), rgba(8, 9, 16, 0.55)),
+    url("bg_image/Spaceship.jpg") center center / cover no-repeat fixed;
+  font-family: "Segoe UI", "Malgun Gothic", sans-serif;
+  color: #f0f0f5;
+}
+
+.game-wrap {
+  position: relative; /* overlay를 이 박스 기준으로 가운데 배치하기 위함 */
+  text-align: center;
+}
+
+/* 우주선 배경 위에서도 글씨/버튼이 잘 보이도록 콘텐츠 뒤에 반투명 패널을 깔아준다.
+   ::before로 넣어서 .game-wrap 안 요소들의 실제 위치(overlay 정렬 등)에는 영향이 없다. */
+.game-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -16px -20px;
+  background: rgba(10, 12, 20, 0.45);
+  border-radius: 12px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+h1 {
+  margin: 0 0 10px;
+  letter-spacing: 2px;
+}
+
+/* ===== 점수 / 레벨 / 생명 표시줄 ===== */
+.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 840px;
+  margin: 0 auto 8px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#score    { color: #6ec6ff; }
+#level    { color: #ffd166; }
+#lives    { color: #ff6b6b; }
+#missiles { color: #ff922b; }
+
+#muteBtn {
+  font-size: 16px;
+  background: none;
+  border: 1px solid #444a63;
+  border-radius: 6px;
+  color: #f0f0f5;
+  cursor: pointer;
+  padding: 2px 8px;
+}
+
+#muteBtn:hover {
+  background: #444a63;
+}
+
+/* ===== 게임 캔버스 ===== */
+canvas {
+  background: #10131f;
+  border: 3px solid #444a63;
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 0 30px rgba(110, 198, 255, 0.15);
+}
+
+/* ===== 시작/종료/승리 화면 오버레이 ===== */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 840px;
+  height: 640px;
+  margin-top: 88px; /* hud 높이만큼 아래로 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: rgba(10, 12, 20, 0.85);
+  border-radius: 8px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+#actionBtn {
+  padding: 10px 26px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #10131f;
+  background: #6ec6ff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+
+#actionBtn:hover {
+  background: #8fd6ff;
+  transform: scale(1.05);
+}
+
+/* ===== 10라운드 클리어 후 나오는 엔딩 영상 화면 ===== */
+.ending {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 840px;
+  height: 640px;
+  margin-top: 88px; /* .overlay와 동일하게 캔버스 위치에 맞춤 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #000;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.ending.hidden {
+  display: none;
+}
+
+.ending video {
+  max-width: 100%;
+  max-height: 520px;
+  border-radius: 6px;
+}
+
+.ending-caption {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #f0f0f5;
+}
+
+.instructions {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #9aa0b4;
+}
+
+.legend {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #9aa0b4;
+}
+
+.legend .tag {
+  display: inline-block;
+  min-width: 18px;
+  margin: 0 4px 0 10px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #10131f;
+}

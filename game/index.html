@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>벽돌깨기 (Arkanoid)</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="game-wrap">
+    <h1>🧱 벽돌깨기</h1>
+
+    <!-- 점수, 생명, 레벨을 보여주는 상단 정보창 -->
+    <div class="hud">
+      <span id="score">점수: 0</span>
+      <span id="level">레벨: 1</span>
+      <span id="lives">생명: 3</span>
+      <span id="missiles">🚀 0</span>
+      <button id="muteBtn" title="배경음악 켜기/끄기">🔊</button>
+    </div>
+
+    <!-- 배경음악: 게임 폴더 안의 bg_music/ALKALOID_HEART.mp3 를 반복 재생합니다 -->
+    <audio id="bgMusic" src="bg_music/ALKALOID_HEART.mp3" loop preload="auto"></audio>
+
+    <!-- 실제 게임 화면이 그려지는 캔버스 -->
+    <canvas id="gameCanvas" width="840" height="640"></canvas>
+
+    <!-- 게임 시작 전/오버/승리 시 보여주는 오버레이 메시지 -->
+    <div id="overlay" class="overlay">
+      <p id="overlayText">← → 방향키 또는 마우스로 패들을 움직이세요<br />스페이스바 또는 클릭으로 시작!</p>
+      <button id="actionBtn">게임 시작</button>
+    </div>
+
+    <!-- 10라운드를 모두 클리어하면 나오는 엔딩 영상 화면 -->
+    <div id="endingWrap" class="ending hidden">
+      <video id="endingVideo" src="eg_movie/Space_battle_with_explosions_You.mp4" preload="auto" playsinline controls></video>
+      <p class="ending-caption">🎉 축하합니다! 10라운드를 모두 클리어했습니다!<br />스페이스바 또는 클릭하면 처음 화면으로 돌아갑니다.</p>
+    </div>
+
+    <p class="instructions">방향키(←→) / 마우스 : 패들 이동 &nbsp;|&nbsp; 스페이스바 : 공 발사 &nbsp;|&nbsp; ↑ : 미사일 발사(보유 시)</p>
+    <p class="legend">
+      <span class="tag" style="background:#6ec6ff">M</span> 멀티볼
+      <span class="tag" style="background:#8ce99a">S+</span> 패들 가속
+      <span class="tag" style="background:#ff6b6b">S-</span> 패들 감속
+      <span class="tag" style="background:#ffd166">W+</span> 패들 확대
+      <span class="tag" style="background:#e64980">W-</span> 패들 축소
+      <span class="tag" style="background:#20c997">B+</span> 공 가속
+      <span class="tag" style="background:#868e96">B-</span> 공 감속
+      <span class="tag" style="background:#ff922b">🚀</span> 미사일 충전
+    </p>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
